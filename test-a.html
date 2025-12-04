@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>부동산 자산 디지털 체험 - A버전 테스트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+         background:#111827;color:#e5e7eb;line-height:1.6;}
+    .site-header{background:linear-gradient(135deg,#1d4ed8,#0ea5e9);
+         padding:16px 0 8px;box-shadow:0 4px 10px rgba(0,0,0,.4);}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 16px 8px;}
+    .site-header h1{font-size:1.3rem;margin-bottom:6px;}
+    .header-sub{font-size:.85rem;color:#e0f2fe;}
+    nav{background:rgba(15,23,42,.85);border-top:1px solid rgba(148,163,184,.3);}
+    .nav-list{max-width:1100px;margin:0 auto;padding:6px 16px;list-style:none;
+         display:flex;gap:8px;overflow-x:auto;}
+    .nav-list a{display:block;padding:6px 12px;border-radius:999px;
+         font-size:.9rem;text-decoration:none;color:#cbd5f5;white-space:nowrap;}
+    .nav-list a:hover{background:rgba(148,163,184,.35);}
+    .nav-list a.active{background:#facc15;color:#111827;font-weight:600;}
+    .site-main{max-width:1100px;margin:18px auto 40px;padding:0 16px;}
+    .page-section{display:none;margin-bottom:32px;}
+    .page-section.visible{display:block;}
+    h2{font-size:1.2rem;margin-bottom:10px;}
+    .notice{margin:12px 0 20px;padding:10px 12px;background:rgba(250,204,21,.1);
+         border-left:4px solid #facc15;font-size:.9rem;}
+    .form{margin-top:12px;max-width:600px;}
+    .form-row{margin-bottom:10px;display:flex;flex-direction:column;gap:4px;}
+    .form-row label{font-size:.9rem;}
+    .form-row input,.form-row textarea{padding:8px 10px;border-radius:6px;
+         border:1px solid #4b5563;background:#020617;color:#e5e7eb;font-size:.9rem;}
+    .form-row input:focus,.form-row textarea:focus{outline:none;border-color:#38bdf8;}
+    .btn{cursor:pointer;border:none;border-radius:999px;padding:8px 18px;
+         font-size:.9rem;margin-top:6px;}
+    .btn.primary{background:#22c55e;color:#022c22;font-weight:600;}
+    .btn.primary:hover{background:#16a34a;}
+    .btn.secondary{background:#1f2937;color:#e5e7eb;}
+    .btn.secondary:hover{background:#374151;}
+    .card{background:#020617;border-radius:10px;padding:14px;border:1px solid rgba(148,163,184,.4);
+         box-shadow:0 6px 16px rgba(0,0,0,.45);font-size:.9rem;margin-top:12px;}
+    .mono{font-family:"SF Mono","Consolas","Menlo",monospace;font-size:.8rem;
+         word-break:break-all;background:#020617;border-radius:6px;
+         padding:6px 8px;margin:4px 0 8px;}
+    .small{font-size:.8rem;color:#9ca3af;}
+    .info-list{list-style:disc;margin-left:18px;margin-top:8px;}
+    .info-list li{margin-bottom:6px;font-size:.9rem;}
+    .site-footer{text-align:center;font-size:.8rem;color:#9ca3af;
+         padding:12px 0 20px;border-top:1px solid #1f2937;margin-top:20px;}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <h1>부동산 자산 디지털 체험 (A버전 테스트)</h1>
+    <p class="header-sub">
+      기존 사이트와는 별도로 동작하는 <strong>연습용 시험 페이지</strong>입니다.
+      로그인·관리자 등 실제 서비스 기능은 포함하지 않습니다.
+    </p>
+  </div>
+  <nav>
+    <ul id="main-nav" class="nav-list">
+      <li><a href="#" data-target="home-section" class="active">홈</a></li>
+      <li><a href="#" data-target="register-section">실험 등록</a></li>
+      <li><a href="#" data-target="blockchain-section">블록체인 통합</a></li>
+      <li><a href="#" data-target="info-section">안내</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="site-main">
+  <section id="home-section" class="page-section visible">
+    <h2>환영합니다</h2>
+    <p>
+      이 페이지는 <strong>A버전 설계</strong>를 시험해 보기 위한
+      <strong>별도 연습 페이지</strong>입니다. 기존 홈(index.html)은 그대로 유지됩니다.
+    </p>
+    <div class="notice">
+      ※ 여기서 입력한 내용은 이 PC 브라우저에만 저장되며,
+      실제 거래·등기·계약에는 <strong>절대 사용하지 마십시오.</strong>
+    </div>
+  </section>
+
+  <section id="register-section" class="page-section">
+    <h2>부동산 자산 실험 등록 (A버전)</h2>
+    <form id="asset-form" class="form">
+      <div class="form-row">
+        <label for="ownerName">소유자 이름</label>
+        <input type="text" id="ownerName" required />
+      </div>
+      <div class="form-row">
+        <label for="assetType">자산 종류</label>
+        <input type="text" id="assetType" required />
+      </div>
+      <div class="form-row">
+        <label for="assetUse">자산 용도 / 상태</label>
+        <input type="text" id="assetUse" placeholder="예: 실거주, 전세, 월세, 매매 등" />
+      </div>
+      <div class="form-row">
+        <label for="assetDesc">자산 설명</label>
+        <textarea id="assetDesc" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn primary">등록 및 해시·코인 생성</button>
+    </form>
+
+    <div id="register-result" class="card" style="display:none;">
+      <h3>실험 등록 결과</h3>
+      <p><strong>소유자:</strong> <span id="result-owner"></span></p>
+      <p><strong>자산 종류:</strong> <span id="result-type"></span></p>
+      <p><strong>용도/상태:</strong> <span id="result-use"></span></p>
+      <p><strong>자산 설명:</strong> <span id="result-desc"></span></p>
+      <hr />
+      <p><strong>해시값 (SHA-256):</strong></p>
+      <p class="mono" id="result-hash"></p>
+      <p><strong>실험용 토큰·코인 ID:</strong></p>
+      <p class="mono" id="result-coin"></p>
+      <p class="small">※ 모두 연습용 값이며 실제 코인·토큰이 아닙니다.</p>
+    </div>
+  </section>
+
+  <section id="blockchain-section" class="page-section">
+    <h2>블록체인 통합 보기 (A버전)</h2>
+    <div class="card">
+      <h3>최신 실험 데이터</h3>
+      <p><strong>소유자:</strong> <span id="bc-owner">-</span></p>
+      <p><strong>자산 종류:</strong> <span id="bc-type">-</span></p>
+      <p><strong>용도/상태:</strong> <span id="bc-use">-</span></p>
+      <p><strong>자산 설명:</strong> <span id="bc-desc">-</span></p>
+      <hr />
+      <p><strong>해시값:</strong></p>
+      <p class="mono" id="bc-hash">등록된 데이터가 없습니다.</p>
+      <p><strong>실험용 코인 ID:</strong></p>
+      <p class="mono" id="bc-coin">등록된 데이터가 없습니다.</p>
+      <button id="bc-refresh" class="btn secondary">최신 정보 불러오기</button>
+    </div>
+  </section>
+
+  <section id="info-section" class="page-section">
+    <h2>안내 (A버전)</h2>
+    <ul class="info-list">
+      <li>이 페이지는 기존 홈과는 별도로 A버전 설계를 시험하는 용도입니다.</li>
+      <li>로그인, 회원가입, 관리자, 광고주 등 실제 서비스 기능은 포함하지 않습니다.</li>
+      <li>해시·코인 값은 브라우저 내부에서만 계산되며 외부로 전송되지 않습니다.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  부동산 자산 디지털 체험 · A버전 시험 페이지 (연습용)
+</footer>
+
+<script>
+  // 메뉴 클릭 시 섹션 전환
+  const navLinks = document.querySelectorAll("#main-nav a");
+  const sections = document.querySelectorAll(".page-section");
+  navLinks.forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const targetId = link.getAttribute("data-target");
+      navLinks.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      sections.forEach(sec => {
+        sec.classList.toggle("visible", sec.id === targetId);
+      });
+    });
+  });
+
+  // 폼 처리 + 해시/코인 생성
+  const form = document.getElementById("asset-form");
+  const resultCard = document.getElementById("register-result");
+  let latestData = null;
+
+  if (form) {
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const owner = document.getElementById("ownerName").value.trim();
+      const type = document.getElementById("assetType").value.trim();
+      const use = document.getElementById("assetUse").value.trim();
+      const desc = document.getElementById("assetDesc").value.trim();
+      if (!owner || !type) {
+        alert("소유자와 자산 종류는 필수입니다.");
+        return;
+      }
+      const combined = `${owner}|${type}|${use}|${desc}|${new Date().toISOString()}`;
+      const hashHex = await sha256(combined);
+      const coinId = "EXP-" + hashHex.substring(0, 12).toUpperCase();
+
+      document.getElementById("result-owner").textContent = owner;
+      document.getElementById("result-type").textContent = type;
+      document.getElementById("result-use").textContent = use || "(미입력)";
+      document.getElementById("result-desc").textContent = desc || "(설명 없음)";
+      document.getElementById("result-hash").textContent = hashHex;
+      document.getElementById("result-coin").textContent = coinId;
+      resultCard.style.display = "block";
+
+      latestData = { owner, type, use: use || "(미입력)", desc: desc || "(설명 없음)", hash: hashHex, coinId };
+      updateBlockchainView(latestData);
+    });
+  }
+
+  document.getElementById("bc-refresh").addEventListener("click", () => {
+    if (!latestData) {
+      alert("아직 등록된 실험 데이터가 없습니다.");
+      return;
+    }
+    updateBlockchainView(latestData);
+    alert("최신 등록 정보를 불러왔습니다.");
+  });
+
+  function updateBlockchainView(data) {
+    document.getElementById("bc-owner").textContent = data.owner;
+    document.getElementById("bc-type").textContent = data.type;
+    document.getElementById("bc-use").textContent = data.use;
+    document.getElementById("bc-desc").textContent = data.desc;
+    document.getElementById("bc-hash").textContent = data.hash;
+    document.getElementById("bc-coin").textContent = data.coinId;
+  }
+
+  async function sha256(message) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+</script>
+</body>
+</html>
