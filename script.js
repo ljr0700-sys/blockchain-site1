@@ -1,167 +1,106 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+// SPA 형식의 섹션 전환 + 해시/코인 생성
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background-color: #f4f4f4;
-    color: #222;
-    line-height: 1.6;
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const navLinks = document.querySelectorAll("#main-nav a");
+    const sections = document.querySelectorAll(".page-section");
 
-header {
-    background: #222;
-    color: #fff;
-    padding: 1rem;
-}
+    // 메뉴 클릭 시 섹션 전환
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("data-target");
 
-header h1 {
-    margin-bottom: 0.5rem;
-    font-size: 1.4rem;
-}
+            navLinks.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
 
-nav ul {
-    list-style: none;
-    display: flex;          /* 가로 메뉴 */
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
+            sections.forEach(sec => {
+                if (sec.id === targetId) {
+                    sec.classList.add("visible");
+                } else {
+                    sec.classList.remove("visible");
+                }
+            });
+        });
+    });
 
-nav a {
-    display: block;
-    padding: 0.4rem 0.8rem;
-    text-decoration: none;
-    color: #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
+    const assetForm = document.getElementById("asset-form");
+    const resultCard = document.getElementById("register-result");
 
-nav a:hover {
-    background: #444;
-}
+    let latestData = null; // 블록체인 섹션에서 사용할 최신 데이터
 
-nav a.active {
-    background: #fff;
-    color: #222;
-    font-weight: 600;
-}
+    if (assetForm) {
+        assetForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-main {
-    max-width: 900px;
-    margin: 1.5rem auto;
-    padding: 0 1rem 2rem;
-}
+            const owner = document.getElementById("ownerName").value.trim();
+            const type = document.getElementById("assetType").value.trim();
+            const desc = document.getElementById("assetDesc").value.trim();
 
-.page-section {
-    display: none;
-    margin-bottom: 2rem;
-}
+            if (!owner || !type) {
+                alert("소유자 이름과 자산 종류는 필수입니다.");
+                return;
+            }
 
-.page-section.visible {
-    display: block;
-}
+            const combined = `${owner}|${type}|${desc}|${new Date().toISOString()}`;
 
-h2 {
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
+            try {
+                const hashHex = await sha256(combined);
+                const coinId = "EXP-" + hashHex.substring(0, 12).toUpperCase();
 
-.notice {
-    margin-top: 0.75rem;
-    padding: 0.5rem 0.75rem;
-    background: #fff3cd;
-    border-left: 4px solid #ffce54;
-    font-size: 0.9rem;
-}
+                // 결과 카드 표시
+                document.getElementById("result-owner").textContent = owner;
+                document.getElementById("result-type").textContent = type;
+                document.getElementById("result-desc").textContent = desc || "(설명 없음)";
+                document.getElementById("result-hash").textContent = hashHex;
+                document.getElementById("result-coin").textContent = coinId;
+                resultCard.classList.remove("hidden");
 
-.form-row {
-    margin-bottom: 0.75rem;
-    display: flex;
-    flex-direction: column;
-}
+                // 최신 데이터 저장 (블록체인 섹션용)
+                latestData = {
+                    owner,
+                    type,
+                    desc: desc || "(설명 없음)",
+                    hash: hashHex,
+                    coinId
+                };
 
-.form-row label {
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-}
+                updateBlockchainView(latestData);
+            } catch (err) {
+                console.error(err);
+                alert("해시 생성 중 오류가 발생했습니다.");
+            }
+        });
+    }
 
-.form-row input,
-.form-row textarea {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
-}
+    // 블록체인 섹션: 최신 데이터 불러오기 버튼
+    const bcRefreshBtn = document.getElementById("bc-refresh");
+    if (bcRefreshBtn) {
+        bcRefreshBtn.addEventListener("click", () => {
+            if (!latestData) {
+                alert("아직 등록된 실험 데이터가 없습니다.");
+                return;
+            }
+            updateBlockchainView(latestData);
+            alert("최신 등록 정보를 불러왔습니다.");
+        });
+    }
 
-button {
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
-}
+    function updateBlockchainView(data) {
+        if (!data) return;
+        document.getElementById("bc-owner").textContent = data.owner;
+        document.getElementById("bc-type").textContent = data.type;
+        document.getElementById("bc-desc").textContent = data.desc;
+        document.getElementById("bc-hash").textContent = data.hash;
+        document.getElementById("bc-coin").textContent = data.coinId;
+    }
+});
 
-.primary-btn {
-    background: #007bff;
-    color: #fff;
+// Web Crypto API 를 이용한 SHA-256 해시 함수
+async function sha256(message) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    return hashHex;
 }
-
-.primary-btn:hover {
-    background: #0062cc;
-}
-
-.secondary-btn {
-    background: #e0e0e0;
-    color: #222;
-}
-
-.secondary-btn:hover {
-    background: #cfcfcf;
-}
-
-.card {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-}
-
-.card.hidden {
-    display: none;
-}
-
-.mono {
-    font-family: "SF Mono", "Consolas", "Menlo", monospace;
-    font-size: 0.85rem;
-    word-break: break-all;
-    background: #f1f1f1;
-    padding: 0.4rem;
-    border-radius: 4px;
-    margin: 0.25rem 0 0.5rem;
-}
-
-.small {
-    font-size: 0.8rem;
-    color: #555;
-}
-
-.info-list {
-    list-style: disc;
-    margin-left: 1.3rem;
-}
-
-.info-list li {
-    margin-bottom: 0.4rem;
-}
-
-footer {
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 0.8rem;
-    color: #666;
-}
-
