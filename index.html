@@ -1,121 +1,981 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>부동산 자산 디지털 체험</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>부동산 자산 디지털화 · 연습 플랫폼</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: #181f30; /* 살짝 더 밝은 남색 */
+      color: #f5f7ff;
+    }
+
+    .app-wrap {
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      padding: 16px;
+    }
+
+    header {
+      background: linear-gradient(120deg, #27335a, #1f7bbd);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      margin-bottom: 18px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 20px;
+    }
+    header p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .login-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .login-bar label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .login-input {
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: none;
+      min-width: 120px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: #ffb13b;
+      color: #222;
+      font-weight: 600;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: #fff;
+    }
+    .btn-small {
+      padding: 4px 9px;
+      font-size: 11px;
+    }
+
+    .status-text {
+      font-size: 12px;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    nav {
+      margin: 14px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .nav-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #222b3f;
+      color: #d9e2ff;
+    }
+
+    .nav-btn.active {
+      background: #ffb13b;
+      color: #141828;
+      font-weight: 600;
+    }
+
+    .card {
+      background: #222b3f;
+      border-radius: 12px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+    .card h3 {
+      margin: 14px 0 6px;
+      font-size: 15px;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 6px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 12px;
+    }
+
+    .field {
+      margin-top: 6px;
+    }
+    .field label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+      opacity: 0.9;
+    }
+    .field input[type="text"],
+    .field input[type="number"],
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: none;
+      background: #141828;
+      color: #f5f7ff;
+      font-size: 13px;
+    }
+    .field textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .small-text {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+
+    .list-box {
+      background: #141828;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 6px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.3);
+      margin-right: 4px;
+    }
+
+    .highlight {
+      color: #ffdf8a;
+      font-weight: 600;
+    }
+
+    .file-input {
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .login-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        gap: 6px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="app-wrap">
     <header>
-        <h1>부동산 자산 디지털 체험</h1>
-        <nav>
-            <ul id="main-nav">
-                <li><a href="#" data-target="home-section" class="active">홈</a></li>
-                <li><a href="#" data-target="register-section">실험 등록</a></li>
-                <li><a href="#" data-target="blockchain-section">블록체인 통합</a></li>
-                <li><a href="#" data-target="info-section">안내</a></li>
-            </ul>
-        </nav>
+      <h1>부동산 자산 디지털화 · 연습 플랫폼</h1>
+      <p>
+        건축·거주·매매·임대·가상 건축 기록을 모으고, 정보 공유 토큰과 거래 성사 코인의 개념을 연습해 보는
+        <span class="highlight">개인 로컬 연습용 사이트</span>입니다. (이 PC 브라우저 안에만 저장)
+      </p>
+
+      <form id="login-form" class="login-bar">
+        <label>
+          아이디(연습용)
+          <input id="login-id" class="login-input" type="text" placeholder="예) jung" />
+        </label>
+        <label>
+          비밀번호(연습용 아무 숫자)
+          <input id="login-pw" class="login-input" type="text" placeholder="예) sam377" />
+        </label>
+        <button type="submit" class="btn btn-primary">로그인 / 저장</button>
+        <button type="button" id="logout-btn" class="btn btn-outline">로그아웃</button>
+      </form>
+
+      <div class="status-text" id="status-line">
+        현재 아이디: <span class="highlight" id="status-current">로그인 전</span> ·
+        토큰: <span id="status-token">0개</span> ·
+        코인: <span id="status-coin">0개</span>
+      </div>
+      <div class="status-text small-text">
+        ※ 아이디마다 토큰·코인, 기록이 따로 저장됩니다. (이 PC의 이 브라우저에만 저장, 실제 블록체인 아님)
+      </div>
     </header>
 
-    <main>
-        <!-- 홈 섹션 -->
-        <section id="home-section" class="page-section visible">
-            <h2>환영합니다</h2>
-            <p>
-                이 사이트는 <strong>부동산 자산의 디지털화</strong>와
-                <strong>블록체인 체험</strong>을 위한 <strong>연습·체험용 페이지</strong>입니다.
+    <nav>
+      <button class="nav-btn active" data-section="home">홈</button>
+      <button class="nav-btn" data-section="build">건축</button>
+      <button class="nav-btn" data-section="live">거주</button>
+      <button class="nav-btn" data-section="trade">매매·임대</button>
+      <button class="nav-btn" data-section="virtual">가상 건축·기술 공유</button>
+      <button class="nav-btn" data-section="token">토큰·코인 연습</button>
+      <button class="nav-btn" data-section="mypage">마이페이지(메모)</button>
+    </nav>
+
+    <!-- 홈 -->
+    <section id="section-home" class="section active">
+      <div class="card">
+        <span class="pill">HOME · 개요</span>
+        <h2>부동산 디지털 플랫폼 개요</h2>
+        <p class="small-text">
+          건축부터 거주, 매매, 임대, 가상 건축까지의 정보를 모으고 좋은 정보를 나누면 토큰, 실제 거래가
+          성사되었다고 가정하면 코인을 받는 연습을 합니다.
+        </p>
+
+        <div class="grid-2" style="margin-top:10px;">
+          <div class="card" style="margin-bottom:0;">
+            <h3>1. 집을 짓고 싶은 사람</h3>
+            <p class="small-text">
+              대지 위치·가격, 설계/시공 비용, 인테리어·정원 계획을 정리해 보는 공간입니다.
             </p>
-            <p class="notice">
-                ※ 실험·연습으로 등록한 내용은 추후에도 계속 유효할 수 있습니다.
-                실제 거래나 등기, 계약에는 사용하지 마십시오.
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <h3>2. 실제 거주 경험</h3>
+            <p class="small-text">
+              편의성, 가구 배치, 관리비, 장단점 등 ‘살아본 이야기’를 공유하는 공간입니다.
             </p>
-        </section>
+          </div>
+        </div>
 
-        <!-- 실험 등록 섹션 -->
-        <section id="register-section" class="page-section">
-            <h2>부동산 자산 실험 등록</h2>
-            <form id="asset-form">
-                <div class="form-row">
-                    <label for="ownerName">소유자 이름</label>
-                    <input type="text" id="ownerName" name="ownerName" required placeholder="예: 홍길동">
-                </div>
-                <div class="form-row">
-                    <label for="assetType">자산 종류</label>
-                    <input type="text" id="assetType" name="assetType" required placeholder="예: 아파트, 토지 등">
-                </div>
-                <div class="form-row">
-                    <label for="assetDesc">자산 설명</label>
-                    <textarea id="assetDesc" name="assetDesc" rows="3" placeholder="예: 서울시 OO구 OO동, 전용 84㎡"></textarea>
-                </div>
+        <div class="grid-2" style="margin-top:10px;">
+          <div class="card" style="margin-bottom:0;">
+            <h3>3. 매매·임대·펜션</h3>
+            <p class="small-text">
+              매수/매도, 임대/임차, 펜션/숙박 정보를 정리하고, 거래가 성사되었다고 가정하여
+              코인 분배 구조를 연습합니다.
+            </p>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <h3>4. 가상 건축 & 기술 공유</h3>
+            <p class="small-text">
+              아직 존재하지 않는 이상적인 집을 가상으로 설계해 보고, 건축 기술·노하우·영상 등을
+              정리해 보는 공간입니다. 광고·PR 아이디어도 기록할 수 있습니다.
+            </p>
+          </div>
+        </div>
 
-                <button type="submit" class="primary-btn">등록 및 해시 생성</button>
-            </form>
+        <p class="small-text" style="margin-top:10px;">
+          ※ 이 사이트는 <span class="highlight">연습용 개인 도구</span>입니다. 실제 거래나 투자, 블록체인 네트워크와 연결되지는 않습니다.
+        </p>
+      </div>
+    </section>
 
-            <div id="register-result" class="card hidden">
-                <h3>등록 결과 (실험용)</h3>
-                <p><strong>소유자:</strong> <span id="result-owner"></span></p>
-                <p><strong>자산 종류:</strong> <span id="result-type"></span></p>
-                <p><strong>자산 설명:</strong> <span id="result-desc"></span></p>
-                <hr>
-                <p><strong>블록체인 해시값:</strong></p>
-                <p class="mono" id="result-hash"></p>
-                <p><strong>실험용 암호화폐 ID:</strong></p>
-                <p class="mono" id="result-coin"></p>
-                <p class="small">
-                    ※ 위 값은 브라우저에서 계산된 <strong>체험용 데이터</strong>이며,
-                    실제 코인·토큰이나 블록체인 네트워크와 연결되어 있지 않습니다.
-                </p>
+    <!-- 건축 -->
+    <section id="section-build" class="section">
+      <div class="card">
+        <span class="pill">건축 · 설계</span>
+        <h2>건축 정보 모으기 (대지 · 설계 · 시공 · 인테리어)</h2>
+
+        <h3>1. 대지 기본 정보</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label>대지 위치</label>
+            <input type="text" placeholder="예) 서울 ○○구 ○○동, 지하철 ○○역 도보 10분" />
+          </div>
+          <div class="field">
+            <label>대지 면적 (㎡)</label>
+            <input type="number" placeholder="예) 200" />
+          </div>
+          <div class="field">
+            <label>대지 매입가 (원)</label>
+            <input type="number" placeholder="예) 600000000" />
+          </div>
+          <div class="field">
+            <label>토지 용도 / 용도지역</label>
+            <input type="text" placeholder="예) 2종 일반주거지역, 가구 수 제한 등" />
+          </div>
+        </div>
+
+        <h3>2. 설계 · 시공 계획</h3>
+        <div class="field">
+          <label>층수 / 세대 수 / 연면적</label>
+          <input type="text" placeholder="예) 지상 3층, 3세대, 연면적 180㎡" />
+        </div>
+        <div class="field">
+          <label>구조 / 주요 자재</label>
+          <input type="text" placeholder="예) 철근콘크리트, 외벽 벽돌, 단열재 등" />
+        </div>
+        <div class="field">
+          <label>예상 공사비 (원)</label>
+          <input type="number" placeholder="예) 200000000" />
+        </div>
+        <div class="field">
+          <label>공정 계획 / 메모</label>
+          <textarea placeholder="예) 설계 완료 → 인허가 → 착공 → 골조 → 마감 순서 정리 등"></textarea>
+        </div>
+
+        <h3>3. 인테리어 · 정원 계획</h3>
+        <div class="field">
+          <label>인테리어 스타일 / 컨셉</label>
+          <input type="text" placeholder="예) 내추럴 우드 + 따뜻한 조명" />
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label>공간별 메모</label>
+            <textarea placeholder="예) 거실/주방/방/욕실별로 필요한 가구·조명·수납 정리"></textarea>
+          </div>
+          <div class="field">
+            <label>정원/테라스 계획</label>
+            <textarea placeholder="예) 데크, 화단, 텃밭, 외부 조명 등"></textarea>
+          </div>
+        </div>
+
+        <h3>4. 건축 체크리스트 요약</h3>
+        <ul class="small-text">
+          <li>대지/용도/규제 확인은 충분한가?</li>
+          <li>공사비·설비·인테리어 예비비(10~15%)까지 고려했는가?</li>
+          <li>입주 후 관리비·수선비까지 대략 예상해 보았는가?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 거주 -->
+    <section id="section-live" class="section">
+      <div class="card">
+        <span class="pill">거주 · 생활</span>
+        <h2>거주 경험 정리</h2>
+        <div class="field">
+          <label>거주하는 지역 / 단지명</label>
+          <input type="text" placeholder="예) 부산 ○○구, ○○아파트 101동" />
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label>편의성 / 생활 인프라</label>
+            <textarea placeholder="예) 마트, 학교, 병원, 공원, 교통 편리성 등"></textarea>
+          </div>
+          <div class="field">
+            <label>관리비 / 유지비</label>
+            <textarea placeholder="예) 월 평균 관리비, 난방비, 주차비, 기타 비용 등"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label>장점 / 단점</label>
+          <textarea placeholder="살아보니 좋았던 점, 아쉬운 점을 자유롭게 적어 보세요."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 매매·임대 -->
+    <section id="section-trade" class="section">
+      <div class="card">
+        <span class="pill">매매 · 임대</span>
+        <h2>매매/임대 기본 정보 정리</h2>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>매물 이름</label>
+            <input type="text" placeholder="예) 청평주택 A동" />
+          </div>
+          <div class="field">
+            <label>거래 유형</label>
+            <select>
+              <option>매매</option>
+              <option>전세</option>
+              <option>월세</option>
+              <option>단기임대/펜션</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>희망 거래 금액 (원)</label>
+            <input type="number" placeholder="예) 330000000" />
+          </div>
+          <div class="field">
+            <label>기타 메모</label>
+            <textarea placeholder="예) 언제까지 매도 희망, 리모델링 여부 등"></textarea>
+          </div>
+        </div>
+
+        <p class="small-text">
+          ※ 실제 인터넷에 올리는 매물은 아니고, 매수/매도 아이디어를 연습용으로 정리하는 공간입니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 가상 건축 · 기술 공유 -->
+    <section id="section-virtual" class="section">
+      <div class="card">
+        <span class="pill">가상 건축 · 기술 공유</span>
+        <h2>가상 건축 아이디어 & 건축 기술 공유</h2>
+
+        <h3>1. 가상 건축 시나리오 메모</h3>
+        <div class="field">
+          <label>가상 건축 이름</label>
+          <input id="virtual-name" type="text" placeholder="예) 숲속 글램핑 하우스" />
+        </div>
+        <div class="field">
+          <label>아이디어 메모</label>
+          <textarea id="virtual-memo" placeholder="예) 구조, 콘셉트, 예상 손님, 토큰/코인 구조 아이디어 등"></textarea>
+        </div>
+
+        <h3>2. 건축 기술 공유 (사진/동영상 첨부)</h3>
+        <p class="small-text">
+          아래는 <span class="highlight">본인 PC에 있는 파일을 선택</span>해서 메모와 함께 정리하는 공간입니다.
+          실제 인터넷으로 업로드되지는 않고, 이 브라우저에서만 볼 수 있습니다.
+        </p>
+        <div class="field">
+          <label>기술 제목</label>
+          <input id="skill-title" type="text" placeholder="예) 벽돌 발수제 시공 요령" />
+        </div>
+        <div class="field">
+          <label>설명 메모</label>
+          <textarea id="skill-memo" placeholder="작업 순서, 팁, 주의사항 등을 적어 보세요."></textarea>
+        </div>
+        <div class="field">
+          <label>사진/동영상 파일 선택</label>
+          <input id="skill-files" class="file-input" type="file" accept="image/*,video/*" multiple />
+        </div>
+        <button type="button" id="save-skill-btn" class="btn btn-primary btn-small">기술 공유 메모 저장</button>
+
+        <div class="field">
+          <label>현재 아이디의 기술 공유 목록 (텍스트만 저장)</label>
+          <div id="skill-list" class="list-box small-text">
+            아직 저장된 기술 공유 메모가 없습니다.
+          </div>
+        </div>
+
+        <h3>3. 광고 · PR 아이디어</h3>
+        <div class="field">
+          <label>광고/PR 제목</label>
+          <input id="ad-title" type="text" placeholder="예) 청평주택 한달살기 체험단 모집" />
+        </div>
+        <div class="field">
+          <label>관련 링크(선택)</label>
+          <input id="ad-link" type="text" placeholder="예) 인스타, 유튜브, 블로그 링크 등" />
+        </div>
+        <div class="field">
+          <label>내용 메모</label>
+          <textarea id="ad-memo" placeholder="홍보 문구, 타깃, 이벤트 내용 등"></textarea>
+        </div>
+        <button type="button" id="save-ad-btn" class="btn btn-primary btn-small">광고·PR 메모 저장</button>
+
+        <div class="field">
+          <label>현재 아이디의 광고·PR 목록</label>
+          <div id="ad-list" class="list-box small-text">
+            아직 저장된 광고·PR 메모가 없습니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 토큰·코인 연습 -->
+    <section id="section-token" class="section">
+      <div class="card">
+        <span class="pill">토큰·코인 연습</span>
+        <h2>토큰은 정보 공유, 코인은 거래 성사 연습</h2>
+        <p class="small-text">
+          이 페이지에서는 <span class="highlight">“정보를 공유하면 토큰”</span>,
+          <span class="highlight">“가상의 거래가 성사되면 코인”</span>을 받는다고 가정하고
+          숫자를 계산해 봅니다. 실제 블록체인이나 지갑은 아니고 이 브라우저 안에서만 움직이는
+          연습용 숫자입니다.
+        </p>
+
+        <h3>1. 정보 공유 토큰 받기</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label>카테고리</label>
+            <select id="token-category">
+              <option>건축·설계</option>
+              <option>거주·생활</option>
+              <option>매매·임대</option>
+              <option>가상 건축</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>기여도 (1~5점)</label>
+            <input id="token-score" type="number" min="1" max="5" value="3" />
+          </div>
+        </div>
+        <div class="field">
+          <label>공유한 내용 한 줄 메모</label>
+          <input id="token-memo" type="text" placeholder="예) 발수제 시공 꿀팁 공유" />
+        </div>
+        <button type="button" id="get-token-btn" class="btn btn-primary btn-small">정보 공유 토큰 받기</button>
+        <div class="small-text" id="token-result" style="margin-top:6px;"></div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.15);margin:14px 0;" />
+
+        <h3>2. 거래 성사 코인 받기 (연습 시뮬레이션)</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label>거래 자산 이름</label>
+            <input id="trade-name" type="text" placeholder="예) 청평주택 A동" />
+          </div>
+          <div class="field">
+            <label>거래 금액 (원)</label>
+            <input id="trade-price" type="number" placeholder="예) 330000000" />
+          </div>
+          <div class="field">
+            <label>보상 비율 (%)</label>
+            <input id="trade-rate" type="number" min="0" max="100" value="1" />
+          </div>
+          <div class="field">
+            <label>참여자 수 (매도자 + 매수자 + 중개/참여자 등)</label>
+            <input id="trade-participants" type="number" min="1" value="3" />
+          </div>
+        </div>
+        <p class="small-text">
+          코인 값 가정: <span class="highlight">1코인 = 10,000원</span> (연습용 기준)<br />
+          보상 풀 = 거래 금액 × 비율(%), 그 금액을 코인으로 바꾸어 참여자에게 균등 분배한다고 가정합니다.
+        </p>
+        <button type="button" id="get-coin-btn" class="btn btn-primary btn-small">코인 계산 & 적립</button>
+        <div class="small-text" id="coin-result" style="margin-top:6px;"></div>
+
+        <div class="card" style="margin-top:16px;">
+          <h3>현재 아이디 토큰·코인 현황 (요약)</h3>
+          <p class="small-text">
+            토큰: <span id="summary-token" class="highlight">0개</span> ·
+            코인: <span id="summary-coin" class="highlight">0개</span>
+          </p>
+          <div class="grid-2">
+            <div>
+              <h4 style="margin:4px 0;font-size:13px;">최근 토큰 기록</h4>
+              <div id="recent-token-list" class="list-box small-text">
+                아직 토큰 기록이 없습니다.
+              </div>
             </div>
-        </section>
-
-        <!-- 블록체인 통합 섹션 -->
-        <section id="blockchain-section" class="page-section">
-            <h2>블록체인 통합 보기</h2>
-            <p>
-                이 섹션에서는 방금 등록한 실험용 자산 정보를 바탕으로
-                <strong>해시값과 실험용 암호화폐 ID</strong>를 다시 확인할 수 있습니다.
-            </p>
-
-            <div id="blockchain-view" class="card">
-                <h3>최신 실험 데이터</h3>
-                <p><strong>소유자:</strong> <span id="bc-owner">-</span></p>
-                <p><strong>자산 종류:</strong> <span id="bc-type">-</span></p>
-                <p><strong>자산 설명:</strong> <span id="bc-desc">-</span></p>
-                <hr>
-                <p><strong>해시값 (SHA-256):</strong></p>
-                <p class="mono" id="bc-hash">등록된 데이터가 없습니다.</p>
-                <p><strong>실험용 암호화폐 ID:</strong></p>
-                <p class="mono" id="bc-coin">등록된 데이터가 없습니다.</p>
-                <button id="bc-refresh" class="secondary-btn">최신 등록 정보 불러오기</button>
+            <div>
+              <h4 style="margin:4px 0;font-size:13px;">최근 코인 기록</h4>
+              <div id="recent-coin-list" class="list-box small-text">
+                아직 코인 기록이 없습니다.
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <p class="small">
-                ※ 실제 블록체인 네트워크에 전송되지 않고, 브라우저 내부에서만 해시를 계산합니다.<br>
-                ※ 토큰·코인 구조는 관리자 계정과 연결되어 있지 않으며, 체험용 화면만 제공합니다.
+    <!-- 마이페이지 -->
+    <section id="section-mypage" class="section">
+      <div class="card">
+        <span class="pill">마이페이지 · 메모</span>
+        <h2>아이디별 요약 보기</h2>
+        <p class="small-text">
+          이 페이지에는 <span class="highlight">현재 로그인한 아이디</span>의 토큰·코인 요약과
+          기술 공유, 광고·PR 메모 일부를 모아서 보여 줍니다.
+        </p>
+
+        <div class="grid-2">
+          <div>
+            <h3>1. 토큰·코인 요약</h3>
+            <p class="small-text">
+              토큰: <span id="mypage-token" class="highlight">0개</span> ·
+              코인: <span id="mypage-coin" class="highlight">0개</span>
             </p>
-        </section>
+            <div id="mypage-token-list" class="list-box small-text">
+              아직 토큰 기록이 없습니다.
+            </div>
+            <div id="mypage-coin-list" class="list-box small-text" style="margin-top:8px;">
+              아직 코인 기록이 없습니다.
+            </div>
+          </div>
+          <div>
+            <h3>2. 기술 공유 / 광고·PR 메모 요약</h3>
+            <div id="mypage-skill-list" class="list-box small-text">
+              아직 기술 공유 메모가 없습니다.
+            </div>
+            <div id="mypage-ad-list" class="list-box small-text" style="margin-top:8px;">
+              아직 광고·PR 메모가 없습니다.
+            </div>
+          </div>
+        </div>
 
-        <!-- 안내 섹션 -->
-        <section id="info-section" class="page-section">
-            <h2>사이트 이용 안내</h2>
-            <ul class="info-list">
-                <li>이 사이트는 <strong>연습·체험용</strong> 페이지입니다.</li>
-                <li>입력하신 데이터는 실제 부동산 등기나 계약에 사용되지 않습니다.</li>
-                <li>생성되는 해시값과 암호화폐 ID는
-                    <strong>브라우저에서 자동 생성되는 실험용 데이터</strong>입니다.</li>
-                <li>로그인, 로그아웃, 관리자 기능, 거주 정보 등은
-                    <strong>모두 제거</strong>된 상태입니다.</li>
-            </ul>
-        </section>
-    </main>
+        <p class="small-text" style="margin-top:10px;">
+          ※ 모든 데이터는 이 컴퓨터, 이 브라우저의 <span class="highlight">localStorage</span>에만 저장됩니다.
+          브라우저를 초기화하거나 PC를 바꾸면 사라질 수 있습니다.
+        </p>
+      </div>
+    </section>
+  </div>
 
-    <footer>
-        <p>부동산 자산 디지털 체험 · 블록체인 연습 페이지</p>
-    </footer>
+  <script>
+    // ===== 공통 저장 구조 =====
+    const STORAGE_KEY = 'bcs_users_v3';
+    const CURRENT_ID_KEY = 'bcs_current_id_v3';
 
-    <script src="script.js"></script>
+    function loadUsers() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+    }
+
+    let users = loadUsers();
+    let currentId = localStorage.getItem(CURRENT_ID_KEY) || null;
+
+    function getCurrentUser() {
+      if (!currentId) return null;
+      if (!users[currentId]) {
+        users[currentId] = {
+          password: '',
+          tokens: 0,
+          coins: 0,
+          tokenHistory: [],
+          coinHistory: [],
+          skills: [],
+          ads: []
+        };
+        saveUsers(users);
+      }
+      return users[currentId];
+    }
+
+    function formatNumber(num) {
+      if (num === null || num === undefined || isNaN(num)) return '0';
+      return num.toLocaleString('ko-KR');
+    }
+
+    // ===== 화면 갱신 =====
+    function refreshStatus() {
+      const statusCurrent = document.getElementById('status-current');
+      const statusToken = document.getElementById('status-token');
+      const statusCoin = document.getElementById('status-coin');
+      const summaryToken = document.getElementById('summary-token');
+      const summaryCoin = document.getElementById('summary-coin');
+      const mypageToken = document.getElementById('mypage-token');
+      const mypageCoin = document.getElementById('mypage-coin');
+
+      const user = getCurrentUser();
+      if (!user) {
+        statusCurrent.textContent = '로그인 전';
+        statusToken.textContent = '0개';
+        statusCoin.textContent = '0개';
+        summaryToken.textContent = '0개';
+        summaryCoin.textContent = '0개';
+        mypageToken.textContent = '0개';
+        mypageCoin.textContent = '0개';
+        renderHistoryBoxes(null);
+        renderSkillAdBoxes(null);
+        return;
+      }
+
+      statusCurrent.textContent = currentId;
+      statusToken.textContent = `${formatNumber(user.tokens)}개`;
+      statusCoin.textContent = `${formatNumber(user.coins)}개`;
+      summaryToken.textContent = `${formatNumber(user.tokens)}개`;
+      summaryCoin.textContent = `${formatNumber(user.coins)}개`;
+      mypageToken.textContent = `${formatNumber(user.tokens)}개`;
+      mypageCoin.textContent = `${formatNumber(user.coins)}개`;
+
+      renderHistoryBoxes(user);
+      renderSkillAdBoxes(user);
+    }
+
+    function renderHistoryBoxes(user) {
+      const recentTokenList = document.getElementById('recent-token-list');
+      const recentCoinList = document.getElementById('recent-coin-list');
+      const mypageTokenList = document.getElementById('mypage-token-list');
+      const mypageCoinList = document.getElementById('mypage-coin-list');
+
+      if (!user) {
+        const emptyMsg = '아직 기록이 없습니다.';
+        recentTokenList.textContent = emptyMsg;
+        recentCoinList.textContent = emptyMsg;
+        mypageTokenList.textContent = emptyMsg;
+        mypageCoinList.textContent = emptyMsg;
+        return;
+      }
+
+      function renderToken(history, target) {
+        if (!history.length) {
+          target.textContent = '아직 토큰 기록이 없습니다.';
+          return;
+        }
+        const last = history.slice(-5).reverse();
+        target.innerHTML = last.map(h =>
+          `<div>· [${h.category}] ${h.memo || '(메모 없음)'} — <span class="highlight">${h.amount}개</span></div>`
+        ).join('');
+      }
+
+      function renderCoin(history, target) {
+        if (!history.length) {
+          target.textContent = '아직 코인 기록이 없습니다.';
+          return;
+        }
+        const last = history.slice(-5).reverse();
+        target.innerHTML = last.map(h =>
+          `<div>· [${h.asset}] ${formatNumber(h.price)}원, 보상 ${h.rate}% → <span class="highlight">${formatNumber(h.amount)}개</span> (1인당 ${formatNumber(h.perPerson)}개)</div>`
+        ).join('');
+      }
+
+      renderToken(user.tokenHistory, recentTokenList);
+      renderToken(user.tokenHistory, mypageTokenList);
+      renderCoin(user.coinHistory, recentCoinList);
+      renderCoin(user.coinHistory, mypageCoinList);
+    }
+
+    function renderSkillAdBoxes(user) {
+      const skillList = document.getElementById('skill-list');
+      const adList = document.getElementById('ad-list');
+      const mySkillList = document.getElementById('mypage-skill-list');
+      const myAdList = document.getElementById('mypage-ad-list');
+
+      if (!user) {
+        const emptySkill = '아직 기술 공유 메모가 없습니다.';
+        const emptyAd = '아직 광고·PR 메모가 없습니다.';
+        skillList.textContent = emptySkill;
+        mySkillList.textContent = emptySkill;
+        adList.textContent = emptyAd;
+        myAdList.textContent = emptyAd;
+        return;
+      }
+
+      if (!user.skills.length) {
+        skillList.textContent = '아직 기술 공유 메모가 없습니다.';
+        mySkillList.textContent = '아직 기술 공유 메모가 없습니다.';
+      } else {
+        const last = user.skills.slice(-5).reverse();
+        const html = last.map(s =>
+          `<div>· <span class="highlight">${s.title}</span> — ${s.memo || '(메모 없음)'}</div>`
+        ).join('');
+        skillList.innerHTML = html;
+        mySkillList.innerHTML = html;
+      }
+
+      if (!user.ads.length) {
+        adList.textContent = '아직 광고·PR 메모가 없습니다.';
+        myAdList.textContent = '아직 광고·PR 메모가 없습니다.';
+      } else {
+        const last = user.ads.slice(-5).reverse();
+        const html = last.map(a =>
+          `<div>· <span class="highlight">${a.title}</span>${a.link ? ` (<a href="${a.link}" target="_blank">링크</a>)` : ''} — ${a.memo || '(메모 없음)'}</div>`
+        ).join('');
+        adList.innerHTML = html;
+        myAdList.innerHTML = html;
+      }
+    }
+
+    // ===== 네비게이션 =====
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-section');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById('section-' + name).classList.add('active');
+      });
+    });
+
+    // ===== 로그인 / 로그아웃 =====
+    document.getElementById('login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const id = document.getElementById('login-id').value.trim();
+      const pw = document.getElementById('login-pw').value.trim();
+      if (!id) {
+        alert('아이디를 입력해 주세요.');
+        return;
+      }
+
+      if (!users[id]) {
+        users[id] = {
+          password: pw,
+          tokens: 0,
+          coins: 0,
+          tokenHistory: [],
+          coinHistory: [],
+          skills: [],
+          ads: []
+        };
+      } else {
+        users[id].password = pw; // 연습용이라 단순 덮어쓰기
+      }
+      saveUsers(users);
+      currentId = id;
+      localStorage.setItem(CURRENT_ID_KEY, currentId);
+      refreshStatus();
+      alert('로그인/저장 완료 (연습용 계정입니다)');
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      currentId = null;
+      localStorage.removeItem(CURRENT_ID_KEY);
+      document.getElementById('login-id').value = '';
+      document.getElementById('login-pw').value = '';
+      refreshStatus();
+      alert('로그아웃 되었습니다. 아이디와 비밀번호 입력 칸이 초기화되었습니다.');
+    });
+
+    // ===== 토큰 받기 =====
+    document.getElementById('get-token-btn').addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('먼저 아이디로 로그인해 주세요.');
+        return;
+      }
+      const category = document.getElementById('token-category').value;
+      const score = parseInt(document.getElementById('token-score').value, 10) || 0;
+      const memo = document.getElementById('token-memo').value.trim();
+
+      if (score <= 0) {
+        alert('기여도는 1~5점 사이로 입력해 주세요.');
+        return;
+      }
+      const amount = score * 10; // 기여도 1점 = 10토큰 (예시)
+      user.tokens += amount;
+      user.tokenHistory.push({
+        category,
+        memo,
+        amount,
+        createdAt: new Date().toISOString()
+      });
+      saveUsers(users);
+      document.getElementById('token-result').textContent =
+        `이번에 받은 토큰: ${amount}개 (누적: ${formatNumber(user.tokens)}개)`;
+      refreshStatus();
+    });
+
+    // ===== 코인 계산 & 적립 =====
+    document.getElementById('get-coin-btn').addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('먼저 아이디로 로그인해 주세요.');
+        return;
+      }
+      const name = document.getElementById('trade-name').value.trim();
+      const price = parseInt(document.getElementById('trade-price').value, 10) || 0;
+      const rate = parseFloat(document.getElementById('trade-rate').value) || 0;
+      const participants = parseInt(document.getElementById('trade-participants').value, 10) || 1;
+
+      if (!name || price <= 0 || rate < 0 || participants <= 0) {
+        alert('거래 이름, 금액, 비율, 참여자 수를 확인해 주세요.');
+        return;
+      }
+      const rewardPool = price * (rate / 100);      // 보상 풀 금액(원)
+      const coinValue = 10000;                      // 1코인 = 10,000원 가정
+      const totalCoins = Math.floor(rewardPool / coinValue);
+      const perPerson = Math.floor(totalCoins / participants);
+
+      user.coins += totalCoins;
+      user.coinHistory.push({
+        asset: name,
+        price,
+        rate,
+        participants,
+        amount: totalCoins,
+        perPerson,
+        createdAt: new Date().toISOString()
+      });
+      saveUsers(users);
+
+      document.getElementById('coin-result').textContent =
+        `보상 풀: ${formatNumber(Math.floor(rewardPool))}원 → 총 코인 ${formatNumber(totalCoins)}개 (1인당 약 ${formatNumber(perPerson)}개). ` +
+        `이번에 적립된 코인: ${formatNumber(totalCoins)}개 (누적: ${formatNumber(user.coins)}개).`;
+      refreshStatus();
+    });
+
+    // ===== 기술 공유 저장 =====
+    document.getElementById('save-skill-btn').addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('먼저 아이디로 로그인해 주세요.');
+        return;
+      }
+      const title = document.getElementById('skill-title').value.trim();
+      const memo = document.getElementById('skill-memo').value.trim();
+      if (!title) {
+        alert('기술 제목을 입력해 주세요.');
+        return;
+      }
+      user.skills.push({
+        title,
+        memo,
+        createdAt: new Date().toISOString()
+      });
+      saveUsers(users);
+      alert('기술 공유 메모가 저장되었습니다. (파일은 PC에만 있고, 목록에는 제목·메모만 저장됩니다.)');
+      renderSkillAdBoxes(user);
+    });
+
+    // ===== 광고·PR 저장 =====
+    document.getElementById('save-ad-btn').addEventListener('click', () => {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('먼저 아이디로 로그인해 주세요.');
+        return;
+      }
+      const title = document.getElementById('ad-title').value.trim();
+      const link = document.getElementById('ad-link').value.trim();
+      const memo = document.getElementById('ad-memo').value.trim();
+      if (!title) {
+        alert('광고/PR 제목을 입력해 주세요.');
+        return;
+      }
+      user.ads.push({
+        title,
+        link,
+        memo,
+        createdAt: new Date().toISOString()
+      });
+      saveUsers(users);
+      alert('광고·PR 메모가 저장되었습니다.');
+      renderSkillAdBoxes(user);
+    });
+
+    // ===== 초기 상태 세팅 =====
+    window.addEventListener('DOMContentLoaded', () => {
+      // 페이지를 열었을 때, 이전에 로그인했던 아이디가 있으면 이어서 사용
+      if (currentId && users[currentId]) {
+        document.getElementById('login-id').value = currentId;
+        document.getElementById('login-pw').value = users[currentId].password || '';
+      }
+      refreshStatus();
+    });
+  </script>
 </body>
 </html>
 
