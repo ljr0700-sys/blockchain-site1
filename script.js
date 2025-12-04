@@ -1,25 +1,67 @@
-// 회원가입 저장 (임시 기능)
-document.getElementById("signupForm")?.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const id = document.getElementById("signupId").value;
-    const pw = document.getElementById("signupPw").value;
+document.addEventListener("DOMContentLoaded", () => {
+    const navLinks = document.querySelectorAll("#main-nav a");
+    const sections = document.querySelectorAll(".page-section");
 
-    localStorage.setItem("userId", id);
-    localStorage.setItem("userPw", pw);
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("data-target");
 
-    alert("회원가입 완료!");
-    window.location.href = "index.html";
+            navLinks.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+
+            sections.forEach(sec => {
+                sec.classList.remove("visible");
+            });
+            document.getElementById(targetId).classList.add("visible");
+        });
+    });
+
+    const assetForm = document.getElementById("asset-form");
+    const resultCard = document.getElementById("register-result");
+
+    let latestData = null;
+
+    assetForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const owner = document.getElementById("ownerName").value;
+        const type = document.getElementById("assetType").value;
+        const desc = document.getElementById("assetDesc").value;
+
+        const combined = `${owner}|${type}|${desc}|${Date.now()}`;
+        const hashHex = await sha256(combined);
+        const coinId = "EXP-" + hashHex.substring(0, 12).toUpperCase();
+
+        document.getElementById("result-owner").textContent = owner;
+        document.getElementById("result-type").textContent = type;
+        document.getElementById("result-desc").textContent = desc;
+        document.getElementById("result-hash").textContent = hashHex;
+        document.getElementById("result-coin").textContent = coinId;
+
+        resultCard.classList.remove("hidden");
+
+        latestData = { owner, type, desc, hash: hashHex, coinId };
+    });
+
+    document.getElementById("bc-refresh").addEventListener("click", () => {
+        if (!latestData) {
+            alert("등록된 데이터가 없습니다.");
+            return;
+        }
+        document.getElementById("bc-owner").textContent = latestData.owner;
+        document.getElementById("bc-type").textContent = latestData.type;
+        document.getElementById("bc-desc").textContent = latestData.desc;
+        document.getElementById("bc-hash").textContent = latestData.hash;
+        document.getElementById("bc-coin").textContent = latestData.coinId;
+    });
 });
 
-// 로그인 확인
-document.getElementById("loginForm")?.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const id = document.getElementById("loginId").value;
-    const pw = document.getElementById("loginPw").value;
-
-    if (id === localStorage.getItem("userId") && pw === localStorage.getItem("userPw")) {
-        window.location.href = "home.html";
-    } else {
-        alert("아이디 또는 비밀번호가 틀렸습니다.");
-    }
-});
+async function sha256(message) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+}
