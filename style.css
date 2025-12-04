@@ -1,47 +1,110 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f0f5;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    width: 90%;
-    max-width: 400px;
-    margin: 80px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+    line-height: 1.6;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 25px;
+header {
+    background: #222;
+    color: #fff;
+    padding: 1rem;
 }
 
-input {
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+}
+
+nav a {
+    display: block;
+    padding: 0.4rem 0.8rem;
+    text-decoration: none;
+    color: #ddd;
+    border-radius: 4px;
+}
+
+nav a.active {
+    background: #fff;
+    color: #222;
+    font-weight: bold;
+}
+
+main {
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 0 1rem 2rem;
+}
+
+.page-section {
+    display: none;
+    margin-bottom: 2rem;
+}
+
+.page-section.visible {
+    display: block;
+}
+
+.form-row {
+    margin-bottom: 0.75rem;
+}
+
+.form-row input,
+.form-row textarea {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 5px;
+    padding: 0.5rem;
     border: 1px solid #ccc;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #3579f6;
-    border: none;
+.primary-btn {
+    background: #007bff;
     color: white;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border: none;
 }
 
-button:hover {
-    background: #1e5ed8;
+.secondary-btn {
+    background: #eee;
+    padding: 0.6rem 1.2rem;
 }
 
-a {
-    color: #3579f6;
+.card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.card.hidden {
+    display: none;
+}
+
+.mono {
+    background: #f1f1f1;
+    padding: 0.4rem;
+    word-break: break-all;
+    font-family: monospace;
+}
+
+.notice {
+    background: #fff3cd;
+    border-left: 4px solid #ffce54;
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+.info-list {
+    margin-left: 1.2rem;
 }
