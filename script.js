@@ -1,67 +1,167 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const navLinks = document.querySelectorAll("#main-nav a");
-    const sections = document.querySelectorAll(".page-section");
-
-    navLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("data-target");
-
-            navLinks.forEach(l => l.classList.remove("active"));
-            link.classList.add("active");
-
-            sections.forEach(sec => {
-                sec.classList.remove("visible");
-            });
-            document.getElementById(targetId).classList.add("visible");
-        });
-    });
-
-    const assetForm = document.getElementById("asset-form");
-    const resultCard = document.getElementById("register-result");
-
-    let latestData = null;
-
-    assetForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const owner = document.getElementById("ownerName").value;
-        const type = document.getElementById("assetType").value;
-        const desc = document.getElementById("assetDesc").value;
-
-        const combined = `${owner}|${type}|${desc}|${Date.now()}`;
-        const hashHex = await sha256(combined);
-        const coinId = "EXP-" + hashHex.substring(0, 12).toUpperCase();
-
-        document.getElementById("result-owner").textContent = owner;
-        document.getElementById("result-type").textContent = type;
-        document.getElementById("result-desc").textContent = desc;
-        document.getElementById("result-hash").textContent = hashHex;
-        document.getElementById("result-coin").textContent = coinId;
-
-        resultCard.classList.remove("hidden");
-
-        latestData = { owner, type, desc, hash: hashHex, coinId };
-    });
-
-    document.getElementById("bc-refresh").addEventListener("click", () => {
-        if (!latestData) {
-            alert("등록된 데이터가 없습니다.");
-            return;
-        }
-        document.getElementById("bc-owner").textContent = latestData.owner;
-        document.getElementById("bc-type").textContent = latestData.type;
-        document.getElementById("bc-desc").textContent = latestData.desc;
-        document.getElementById("bc-hash").textContent = latestData.hash;
-        document.getElementById("bc-coin").textContent = latestData.coinId;
-    });
-});
-
-async function sha256(message) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(message);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hashBuffer))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+    line-height: 1.6;
+}
+
+header {
+    background: #222;
+    color: #fff;
+    padding: 1rem;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;          /* 가로 메뉴 */
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    display: block;
+    padding: 0.4rem 0.8rem;
+    text-decoration: none;
+    color: #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+nav a:hover {
+    background: #444;
+}
+
+nav a.active {
+    background: #fff;
+    color: #222;
+    font-weight: 600;
+}
+
+main {
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 0 1rem 2rem;
+}
+
+.page-section {
+    display: none;
+    margin-bottom: 2rem;
+}
+
+.page-section.visible {
+    display: block;
+}
+
+h2 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.notice {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: #fff3cd;
+    border-left: 4px solid #ffce54;
+    font-size: 0.9rem;
+}
+
+.form-row {
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row label {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.form-row input,
+.form-row textarea {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+.primary-btn {
+    background: #007bff;
+    color: #fff;
+}
+
+.primary-btn:hover {
+    background: #0062cc;
+}
+
+.secondary-btn {
+    background: #e0e0e0;
+    color: #222;
+}
+
+.secondary-btn:hover {
+    background: #cfcfcf;
+}
+
+.card {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.card.hidden {
+    display: none;
+}
+
+.mono {
+    font-family: "SF Mono", "Consolas", "Menlo", monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    background: #f1f1f1;
+    padding: 0.4rem;
+    border-radius: 4px;
+    margin: 0.25rem 0 0.5rem;
+}
+
+.small {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.info-list {
+    list-style: disc;
+    margin-left: 1.3rem;
+}
+
+.info-list li {
+    margin-bottom: 0.4rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
