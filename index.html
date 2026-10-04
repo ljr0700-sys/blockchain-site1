@@ -1,23 +1,359 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>블록체인 자산 디지털화</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>블록체인 자산 디지털화</h1>
-    <p>부동산 자산을 디지털로 등록하고, 블록체인으로 기록·검증하는 데모 사이트입니다.</p>
 
-    <div class="buttons">
-      <a class="btn" href="signup.html">회원가입</a>
-      <a class="btn" href="home.html">로그인 후 화면(예시)</a>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background: #090909;
+      color: #ffffff;
+    }
+
+    header {
+      background: #111111;
+      border-bottom: 1px solid #8b6914;
+      padding: 22px 6%;
+    }
+
+    .logo {
+      color: #e6bd45;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      border: 1px solid #8b6914;
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+
+    nav a:hover {
+      background: #d4af37;
+      color: #000000;
+    }
+
+    .hero {
+      padding: 75px 6%;
+      text-align: center;
+      background:
+        linear-gradient(135deg, #080808, #201500, #080808);
+      border-bottom: 1px solid #8b6914;
+    }
+
+    .hero h1 {
+      color: #e6bd45;
+      font-size: 42px;
+      margin: 0 0 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #eeeeee;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .hero-buttons {
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 6px;
+      padding: 13px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      background: #d4af37;
+      color: #111111;
+    }
+
+    .btn-dark {
+      background: #171717;
+      color: #e6bd45;
+      border: 1px solid #d4af37;
+    }
+
+    main {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    section {
+      padding: 55px 0;
+    }
+
+    h2 {
+      color: #e6bd45;
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .section-text {
+      color: #cccccc;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #151515;
+      border: 1px solid #6f5517;
+      border-radius: 12px;
+      padding: 24px;
+      min-height: 150px;
+    }
+
+    .card h3 {
+      color: #e6bd45;
+      margin-top: 0;
+    }
+
+    .card p {
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    .process {
+      background: #111111;
+      border: 1px solid #6f5517;
+      border-radius: 12px;
+      padding: 28px;
+      line-height: 2;
+      font-size: 18px;
+    }
+
+    .reward {
+      background: linear-gradient(135deg, #17120a, #0d0d0d);
+      border: 1px solid #d4af37;
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .reward strong {
+      color: #e6bd45;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 35px 6%;
+      text-align: center;
+      color: #999999;
+      background: #050505;
+      border-top: 1px solid #6f5517;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 24px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">블록체인 자산 디지털화</div>
+
+  <nav>
+    <a href="#home">홈</a>
+    <a href="#categories">부동산 정보</a>
+    <a href="#community">회원 검증</a>
+    <a href="#reward">보상</a>
+    <a href="#virtual">가상건축</a>
+    <a href="signup.html">회원가입</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>부동산 정보·경험·기여를 디지털 자산으로</h1>
+
+  <p>
+    부동산과 주거생활에 관한 정보를 회원이 직접 등록하고,
+    서로 확인하고 의견을 나누며 정보를 발전시키는 플랫폼입니다.
+    회원의 유익한 기여와 검증 활동을 기록하여
+    새로운 디지털 자산 생태계로 확장합니다.
+  </p>
+
+  <div class="hero-buttons">
+    <a class="btn" href="signup.html">회원가입</a>
+    <a class="btn btn-dark" href="#categories">부동산 정보 보기</a>
+    <a class="btn btn-dark" href="#community">정보 등록·검증</a>
+  </div>
+</section>
+
+<main>
+
+<section id="categories">
+  <h2>부동산·주거 정보</h2>
+
+  <p class="section-text">
+    부동산 거래뿐 아니라 건축부터 주거생활, 집수리,
+    정원 관리까지 생활과 자산에 관한 정보를 함께 만들어 갑니다.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>🏗 건축·신축</h3>
+      <p>토지, 설계, 건축 과정, 건축비와 실제 경험을 공유합니다.</p>
     </div>
 
-    <hr />
-    <p class="small">※ 실제 서비스/결제/투자 기능은 포함되지 않은 데모입니다.</p>
+    <div class="card">
+      <h3>🏠 부동산 매매</h3>
+      <p>주택·토지·건물 등 부동산 관련 정보를 등록하고 확인합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔑 임대차</h3>
+      <p>전세, 월세, 렌트 등 다양한 주거 임대 정보를 공유합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔄 바꿔 살기</h3>
+      <p>지역과 주택 조건에 따라 서로 주거 공간을 교환하는 정보를 연결합니다.</p>
+    </div>
+
+    <div class="card" id="virtual">
+      <h3>🏙 가상건축</h3>
+      <p>미래의 집과 건물을 디지털 공간에서 설계하고 아이디어를 공유합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>🛋 주거문화</h3>
+      <p>좋은 주거환경과 생활방식에 관한 경험과 정보를 나눕니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔧 집수리</h3>
+      <p>주택 보수, 관리, 유지비용과 실제 수리 경험을 공유합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>✨ 인테리어</h3>
+      <p>실내 디자인, 리모델링, 자재와 시공 정보를 공유합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>🌳 정원·조경</h3>
+      <p>잔디, 나무, 꽃, 정원관리와 조경 경험을 공유합니다.</p>
+    </div>
+
   </div>
+</section>
+
+
+<section id="community">
+  <h2>회원 참여와 정보 검증</h2>
+
+  <p class="section-text">
+    한 사람이 올린 정보를 그대로 확정하지 않고,
+    다른 회원들의 경험과 의견을 더해 신뢰도를 높이는 구조입니다.
+  </p>
+
+  <div class="process">
+    ① 회원이 정보와 경험을 등록합니다.<br>
+    ② 다른 회원이 내용을 확인하고 의견을 남깁니다.<br>
+    ③ 필요한 경우 수정·보완 자료를 추가합니다.<br>
+    ④ 검증된 정보에는 검증 상태를 표시합니다.<br>
+    ⑤ 유익한 정보 제공과 검증 활동에 기여 기록을 부여합니다.
+  </div>
+</section>
+
+
+<section id="reward">
+  <h2>기여 보상 시스템</h2>
+
+  <div class="reward">
+    <p>
+      회원이 좋은 정보를 등록하거나 오류를 수정하고,
+      다른 회원에게 도움이 되는 검증 활동을 하면
+      <strong>기여 포인트</strong>를 받을 수 있도록 설계합니다.
+    </p>
+
+    <p>
+      초기에는 거래하거나 현금화하지 않는
+      <strong>사이트 내부 포인트와 회원 등급</strong>으로 운영합니다.
+    </p>
+
+    <p>
+      향후 법률·보안·사업 구조를 충분히 검토한 뒤
+      블록체인 기록, NFT 인증서, 토큰 등으로
+      단계적으로 확장할 수 있습니다.
+    </p>
+  </div>
+</section>
+
+
+<section>
+  <h2>플랫폼 발전 방향</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>1단계</h3>
+      <p>회원가입, 부동산 정보 등록, 검색, 의견 작성 기능을 구축합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>2단계</h3>
+      <p>회원 검증, 신뢰도, 신고·수정, 기여 포인트 기능을 구축합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>3단계</h3>
+      <p>전문가와 업체 참여, 건축·수리·인테리어 정보 서비스를 확대합니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>4단계</h3>
+      <p>법률 검토 후 블록체인, NFT 및 디지털 자산 기능을 확장합니다.</p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>블록체인 자산 디지털화</strong><br><br>
+  부동산 정보와 경험을 함께 만들고 검증하는 디지털 자산 플랫폼
+  <br><br>
+  © 2026 Blockchain Asset Digitalization
+</footer>
+
 </body>
 </html>
