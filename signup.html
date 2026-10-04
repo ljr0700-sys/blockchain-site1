@@ -1,20 +1,260 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>로그인</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입 | 블록체인 자산 디지털화</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background: #100e0a;
+      color: #ffffff;
+    }
+
+    header {
+      padding: 24px 30px;
+      border-bottom: 1px solid #66551c;
+      background: #17130b;
+    }
+
+    .logo {
+      color: #e6c84a;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .home-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #e6c84a;
+      text-decoration: none;
+      border: 1px solid #8e7a2b;
+      padding: 9px 18px;
+      border-radius: 8px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 620px;
+      margin: 45px auto;
+      background: #1b170f;
+      border: 1px solid #7a6826;
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: 0 0 25px rgba(230, 200, 74, 0.12);
+    }
+
+    h1 {
+      text-align: center;
+      color: #e6c84a;
+      margin-top: 0;
+      font-size: 34px;
+    }
+
+    .intro {
+      text-align: center;
+      color: #d8d2bd;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #e6c84a;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #75662d;
+      background: #0e0d0a;
+      color: white;
+      font-size: 16px;
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #d8bd42;
+    }
+
+    .agree {
+      margin-top: 22px;
+      color: #ddd5ba;
+      line-height: 1.6;
+    }
+
+    .agree input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: none;
+      border-radius: 9px;
+      background: #e6c84a;
+      color: #16130b;
+      font-size: 19px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #f4dc68;
+    }
+
+    .login {
+      text-align: center;
+      margin-top: 22px;
+      color: #cfc7aa;
+    }
+
+    .login a {
+      color: #e6c84a;
+    }
+
+    .notice {
+      margin-top: 28px;
+      padding: 16px;
+      background: #12100b;
+      border-left: 4px solid #e6c84a;
+      color: #cfc8ae;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #8f896f;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px auto;
+        padding: 24px 18px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-    <h1>로그인</h1>
-    <form id="loginForm">
-        <input type="text" id="loginId" placeholder="아이디" required>
-        <input type="password" id="loginPw" placeholder="비밀번호" required>
-        <button type="submit">로그인</button>
-    </form>
-    <p>아직 회원이 아니라면? <a href="signup.html">회원가입</a></p>
-</div>
-<script src="script.js"></script>
+
+<header>
+  <div class="logo">블록체인 자산 디지털화</div>
+  <a class="home-link" href="index.html">홈으로 돌아가기</a>
+</header>
+
+<main class="container">
+
+  <h1>회원가입</h1>
+
+  <p class="intro">
+    부동산 정보와 경험을 공유하고 검증하며<br>
+    기여 활동을 기록하는 디지털 자산 플랫폼입니다.
+  </p>
+
+  <form id="signupForm">
+
+    <label for="name">이름</label>
+    <input id="name" type="text" placeholder="이름을 입력하세요" required>
+
+    <label for="userid">아이디</label>
+    <input id="userid" type="text" placeholder="사용할 아이디를 입력하세요" required>
+
+    <label for="email">이메일</label>
+    <input id="email" type="email" placeholder="이메일 주소를 입력하세요" required>
+
+    <label for="phone">휴대전화</label>
+    <input id="phone" type="tel" placeholder="010-0000-0000">
+
+    <label for="password">비밀번호</label>
+    <input id="password" type="password" placeholder="비밀번호를 입력하세요" required>
+
+    <label for="password2">비밀번호 확인</label>
+    <input id="password2" type="password" placeholder="비밀번호를 다시 입력하세요" required>
+
+    <label for="region">활동 지역</label>
+    <input id="region" type="text" placeholder="예: 경기도, 서울">
+
+    <label for="interest">관심 분야</label>
+    <select id="interest">
+      <option value="">관심 분야를 선택하세요</option>
+      <option>건축·신축</option>
+      <option>부동산 매매</option>
+      <option>전세·월세·렌트</option>
+      <option>바꿔 살기</option>
+      <option>가상 건축</option>
+      <option>주거 문화</option>
+      <option>집수리</option>
+      <option>인테리어</option>
+      <option>정원·조경</option>
+      <option>부동산 정보 제공·검증</option>
+    </select>
+
+    <div class="agree">
+      <label>
+        <input id="agree" type="checkbox" required>
+        이용약관 및 개인정보 처리방침에 동의합니다.
+      </label>
+    </div>
+
+    <button type="submit">회원가입 신청</button>
+
+  </form>
+
+  <div class="login">
+    이미 회원이신가요?
+    <a href="home.html">로그인</a>
+  </div>
+
+  <div class="notice">
+    현재는 사이트 구축 단계입니다.
+    실제 회원정보를 안전하게 저장하려면 다음 단계에서
+    회원 인증과 데이터베이스를 연결해야 합니다.
+  </div>
+
+</main>
+
+<footer>
+  © 블록체인 자산 디지털화
+</footer>
+
+<script>
+  document.getElementById("signupForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
+
+    if (password !== password2) {
+      alert("비밀번호가 서로 다릅니다. 다시 확인해 주세요.");
+      return;
+    }
+
+    alert("회원가입 화면이 정상적으로 작동합니다. 현재는 시험 단계이므로 회원정보는 저장되지 않습니다.");
+  });
+</script>
+
 </body>
 </html>
